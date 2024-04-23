@@ -3,11 +3,12 @@ project:
   output-dir: docs
 
 website:
-  title: "ssss"
+  title: "최희승 블로그 만드는거 도와주기"
   navbar:
+    background: '#0F1B38'
     left:
-      - href: index.qmd
-        text: Home
+      - href: index_proj.qmd
+        text: Projects
       - about.qmd
 
 format:
