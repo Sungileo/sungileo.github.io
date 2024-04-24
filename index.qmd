@@ -1,9 +1,37 @@
 ---
-title: "희희희~"
+title: ""
 ---
 
 This is a Quarto website.
 
+이거슨 콰르토 웹사이트이다.
+
+----
+
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
-## 희희
+콰르토 웹사이트에 대해 알고 싶다면 여기로 와라 <https://quarto.org/docs/websites>.
+
+----
+
+### R 코드 셀
+
+```{r} 
+library(tidyverse)
+mpg %>% 
+  ggplot(mapping = aes(x=class, y=hwy, fill=class))+
+  geom_boxplot() +
+  theme_minimal()
+```
+
+
+
+
+
+
+
+
+
+
+
+

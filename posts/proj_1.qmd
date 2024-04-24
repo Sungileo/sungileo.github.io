@@ -3,7 +3,7 @@ title: "proj_1"
 author: "나무껍질가이즈"
 date: "2024/04/22"
 description: "단단한 나무껍질"
-categories: R
+categories: [R,QMD]
 editor_options: 
   chunk_output_type: inline
 ---
