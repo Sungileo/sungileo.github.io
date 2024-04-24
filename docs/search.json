@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "최희승 블로그 만드는거 도와주기",
+    "title": "인덱스",
     "section": "",
-    "text": "This is a Quarto website.\n이거슨 콰르토 웹사이트이다.\n\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n콰르토 웹사이트에 대해 알고 싶다면 여기로 와라 https://quarto.org/docs/websites.\n\n\nR 코드 셀\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.0\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nmpg %&gt;% \n  ggplot(mapping = aes(x=class, y=hwy, fill=class))+\n  geom_boxplot() +\n  theme_minimal()"
+    "text": "이 페이지는 인덱스다."
   },
   {
     "objectID": "about.html",
@@ -40,5 +40,12 @@
     "title": "proj_2",
     "section": "",
     "text": "import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nprint(\"pandas :\", pd.__version__)\nprint(\"numpy :\" , np.__version__)\n\npandas : 1.5.3\nnumpy : 1.26.2\n\n\n\n\nnp.random.seed(0)\ndates = pd.date_range('20240101', periods=10)\ndata = pd.DataFrame(np.random.randn(10, 4), index=dates, columns=list('ABCD'))\n\nprint(data)\n\n\ndata.plot()\nplt.title('Random Data Visualization')\nplt.xlabel('Date')\nplt.ylabel('Values')\nplt.show()\n\n                   A         B         C         D\n2024-01-01  1.764052  0.400157  0.978738  2.240893\n2024-01-02  1.867558 -0.977278  0.950088 -0.151357\n2024-01-03 -0.103219  0.410599  0.144044  1.454274\n2024-01-04  0.761038  0.121675  0.443863  0.333674\n2024-01-05  1.494079 -0.205158  0.313068 -0.854096\n2024-01-06 -2.552990  0.653619  0.864436 -0.742165\n2024-01-07  2.269755 -1.454366  0.045759 -0.187184\n2024-01-08  1.532779  1.469359  0.154947  0.378163\n2024-01-09 -0.887786 -1.980796 -0.347912  0.156349\n2024-01-10  1.230291  1.202380 -0.387327 -0.302303"
+  },
+  {
+    "objectID": "index.html#이-페이지는-인덱스다.-1",
+    "href": "index.html#이-페이지는-인덱스다.-1",
+    "title": "인덱스",
+    "section": "",
+    "text": "이 페이지는 인덱스다."
   }
 ]

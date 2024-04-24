@@ -1,32 +1,15 @@
 ---
-title: ""
+title: "인덱스"
 ---
 
-This is a Quarto website.
+# 이 페이지는 인덱스다.
+## 이 페이지는 인덱스다.
+### 이 페이지는 인덱스다.
+### 이 페이지는 인덱스다.
+#### 이 페이지는 인덱스다.
+##### 이 페이지는 인덱스다.
 
-이거슨 콰르토 웹사이트이다.
-
-----
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-콰르토 웹사이트에 대해 알고 싶다면 여기로 와라 <https://quarto.org/docs/websites>.
-
-----
-
-### R 코드 셀
-
-```{r} 
-library(tidyverse)
-mpg %>% 
-  ggplot(mapping = aes(x=class, y=hwy, fill=class))+
-  geom_boxplot() +
-  theme_minimal()
-```
-
-
-
-
+이 페이지는 인덱스다.
 
 
 
