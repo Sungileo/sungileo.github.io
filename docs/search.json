@@ -18,7 +18,7 @@
     "href": "index_proj.html",
     "title": "희희희~",
     "section": "",
-    "text": "군집화\n\n\n\n\n\n\n\nPython\n\n\nipynb\n\n\n\n\n하수구 위치, 표고(지형) 데이터를 사용한 군집화\n\n\n\n\n\n\nApr 24, 2024\n\n\nSungil_Park\n\n\n\n\n\n\n  \n\n\n\n\nproj_2\n\n\n\n\n\n\n\nPython\n\n\nipynb\n\n\n\n\n단단한 나무껍질\n\n\n\n\n\n\nApr 24, 2024\n\n\n나무껍질가이즈\n\n\n\n\n\n\n  \n\n\n\n\nproj_1\n\n\n\n\n\n\n\nR\n\n\nQMD\n\n\n\n\n단단한 나무껍질\n\n\n\n\n\n\nApr 22, 2024\n\n\n나무껍질가이즈\n\n\n\n\n\n\nNo matching items"
+    "text": "iframe을 사용해보아요~\n\n\n\n\n\n\n\nquarto\n\n\n\n\nquarto\n\n\n\n\n\n\nApr 24, 2024\n\n\nSungil_Park\n\n\n\n\n\n\n  \n\n\n\n\n군집화\n\n\n\n\n\n\n\nPython\n\n\nipynb\n\n\n\n\n하수구 위치, 표고(지형) 데이터를 사용한 군집화\n\n\n\n\n\n\nApr 24, 2024\n\n\nSungil_Park\n\n\n\n\n\n\n  \n\n\n\n\nproj_2\n\n\n\n\n\n\n\nPython\n\n\nipynb\n\n\n\n\n단단한 나무껍질\n\n\n\n\n\n\nApr 24, 2024\n\n\n나무껍질가이즈\n\n\n\n\n\n\n  \n\n\n\n\nproj_1\n\n\n\n\n\n\n\nR\n\n\nQMD\n\n\n\n\n단단한 나무껍질\n\n\n\n\n\n\nApr 22, 2024\n\n\n나무껍질가이즈\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/proj_1.html",
@@ -75,5 +75,12 @@
     "title": "군집화",
     "section": "결론",
     "text": "결론\n\n군집 1. 강남역 일대\n23-0006 22-0014 22-0011 22-0010 22-0012 22-0013\n\n\n군집 2. 압구정, 한강변 일대\n23-0002 23-0001 23-0007 23-0008 23-0009 23-0012 23-0011 23-0013"
+  },
+  {
+    "objectID": "posts/proj_4.html",
+    "href": "posts/proj_4.html",
+    "title": "iframe을 사용해보아요~",
+    "section": "",
+    "text": "####################  UTM-K to wgs84  ####################\nimport geopandas as gpd\n\ndf = gpd.read_file(\"/home/sungil/Income_pred_Dacon/PersonalProj/emd/emd.shp\",encoding = \"euc-kr\")\n\nif df.crs is None:\n    df.set_crs(epsg = 5179, inplace = True)\n    \nprint(\"Original CRS set to:\", df.crs)\n\ndf_wgs84 = df.to_crs(epsg=4326)\nprint(\"Transformed CRS:\", df_wgs84.crs)\n\n####################  시각화  ####################\nimport random\nimport folium\nfrom folium import  Polygon\n\nunique_names = df['EMD_KOR_NM'].unique()\ncolors = {name: f'#{random.randint(0, 0xFFFFFF):06x}' for name in unique_names}\n\n# 스타일 함수 정의\ndef style_function(feature):\n    name = feature['properties']['EMD_KOR_NM']\n    return {\n        'fillColor': colors[name],\n        'color': 'black',  # 경계선 색상\n        'weight': 1,       # 경계선 두께\n        'fillOpacity': 0.2 # 채우기 불투명도\n    }\n\nM = folium.Map(location=[36.5, 127.04899], \n               zoom_start=7,tiles=\"Cartodb Positron\")\n\n# folium.GeoJson(df_wgs84, \n#                name=\"geojson\",\n#                popup=folium.GeoJsonPopup(fields=['EMD_KOR_NM'], labels=False),\n#                style_function=style_function).add_to(M)\n\nOriginal CRS set to: EPSG:5179\nTransformed CRS: EPSG:4326\n\n\n&lt;folium.features.GeoJson at 0x7f6b9223eb60&gt;"
   }
 ]

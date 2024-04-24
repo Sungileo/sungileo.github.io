@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "최희승 블로그 만드는거 도와주기"
+  title: "<b>희타민</b> 바보"
   navbar:
     background: '#0F1B38'
     left:
