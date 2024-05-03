@@ -8,7 +8,6 @@ editor_options:
   chunk_output_type: inline
 ---
 
-
 ```{r}
 library(tidyverse)
 ```
@@ -19,4 +18,3 @@ mpg %>%
   geom_boxplot() +
   theme_minimal()
 ```
-

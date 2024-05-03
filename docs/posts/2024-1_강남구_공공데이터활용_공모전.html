@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="나무껍질가이즈">
+<meta name="dcterms.date" content="2024-04-29">
+<meta name="description" content="제1회 강남구 공공데이터 활용 공모전">
+
+<title>Huitamin - 하수관로 수위센서 활용 위험지역 탐지</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title"><b>Huitamin<b></b></b></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index_proj.html" rel="" target="">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#분석-배경-및-필요성" id="toc-분석-배경-및-필요성" class="nav-link active" data-scroll-target="#분석-배경-및-필요성">Ⅰ. 분석 배경 및 필요성</a>
+  <ul class="collapse">
+  <li><a href="#분석-배경-및-필요성-1" id="toc-분석-배경-및-필요성-1" class="nav-link" data-scroll-target="#분석-배경-및-필요성-1">1. 분석 배경 및 필요성</a>
+  <ul class="collapse">
+  <li><a href="#사고-사례" id="toc-사고-사례" class="nav-link" data-scroll-target="#사고-사례">- 사고 사례</a></li>
+  <li><a href="#연구의-필요성" id="toc-연구의-필요성" class="nav-link" data-scroll-target="#연구의-필요성">- 연구의 필요성</a></li>
+  <li><a href="#연구-관련-시스템-현황" id="toc-연구-관련-시스템-현황" class="nav-link" data-scroll-target="#연구-관련-시스템-현황">- 연구 관련 시스템 현황</a></li>
+  </ul></li>
+  <li><a href="#연구의-방향성" id="toc-연구의-방향성" class="nav-link" data-scroll-target="#연구의-방향성">2. 연구의 방향성</a></li>
+  </ul></li>
+  <li><a href="#분석-내용" id="toc-분석-내용" class="nav-link" data-scroll-target="#분석-내용">Ⅱ. 분석 내용</a>
+  <ul class="collapse">
+  <li><a href="#데이터-설명-및-수집" id="toc-데이터-설명-및-수집" class="nav-link" data-scroll-target="#데이터-설명-및-수집">1. 데이터 설명 및 수집</a></li>
+  <li><a href="#분석-방법" id="toc-분석-방법" class="nav-link" data-scroll-target="#분석-방법">2. 분석 방법</a>
+  <ul class="collapse">
+  <li><a href="#k-means-clustering-모델을-활용한-구역-군집화" id="toc-k-means-clustering-모델을-활용한-구역-군집화" class="nav-link" data-scroll-target="#k-means-clustering-모델을-활용한-구역-군집화">- k-means clustering 모델을 활용한 구역 군집화</a></li>
+  <li><a href="#상관관계-분석" id="toc-상관관계-분석" class="nav-link" data-scroll-target="#상관관계-분석">- 상관관계 분석</a></li>
+  <li><a href="#데이터-재구조화" id="toc-데이터-재구조화" class="nav-link" data-scroll-target="#데이터-재구조화">- 데이터 재구조화</a></li>
+  <li><a href="#하수관로의-수위-비율-예측lstm-transformer" id="toc-하수관로의-수위-비율-예측lstm-transformer" class="nav-link" data-scroll-target="#하수관로의-수위-비율-예측lstm-transformer">- 하수관로의 수위 비율 예측(LSTM, Transformer)</a></li>
+  </ul></li>
+  <li><a href="#서비스-활용-시-사용되는-대시보드-예시" id="toc-서비스-활용-시-사용되는-대시보드-예시" class="nav-link" data-scroll-target="#서비스-활용-시-사용되는-대시보드-예시">3. 서비스 활용 시 사용되는 대시보드 예시</a></li>
+  </ul></li>
+  <li><a href="#활용-방안-및-기대효과" id="toc-활용-방안-및-기대효과" class="nav-link" data-scroll-target="#활용-방안-및-기대효과">Ⅲ. 활용 방안 및 기대효과</a></li>
+  <li><a href="#활용데이터-및-참고-문헌-출처" id="toc-활용데이터-및-참고-문헌-출처" class="nav-link" data-scroll-target="#활용데이터-및-참고-문헌-출처">Ⅳ. 활용데이터 및 참고 문헌 출처</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">하수관로 수위센서 활용<br> 위험지역 탐지</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">PYTHON</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    제1회 강남구 공공데이터 활용 공모전
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>나무껍질가이즈 </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 29, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="분석-배경-및-필요성" class="level1">
+<h1>Ⅰ. 분석 배경 및 필요성</h1>
+<section id="분석-배경-및-필요성-1" class="level2">
+<h2 class="anchored" data-anchor-id="분석-배경-및-필요성-1">1. 분석 배경 및 필요성</h2>
+<section id="사고-사례" class="level3">
+<h3 class="anchored" data-anchor-id="사고-사례">- 사고 사례</h3>
+<p>매년 여름 주로 발생하는 피해는 단기 집중 호우와 홍수로 인한 피해일 것이다. 홍수로 인해서 침수 와 관련되어 맨홀 및 하수구와 관련된 사고 등 다양한 사고가 해마다 증가하고 있는 추세이다. 2022년 8월경 강남역 인근 맨홀에 남매가 맨홀 속으로 빨려들어 실종되어 결국 변사체로 발견하는 안타까운 사고가 발생하였다. 이 때 당시 강남역 일대에는 시간당 100mm 이상의 기록적인 폭우가 쏟아지면서 큰 인명과 재산 피해가 잇따라 발생했다.</p>
+<p>강남역 일대는 2010년부터 다섯 번이나 침수되었다. 침수나 정전 사고가 속출하면서 강남구 일대에 있는 주민들에게 엄청난 피해를 입혔다. 이는 처리 용량을 넘어선 기록적인 강수량이 침수 피해의 가 장 큰 요인이지만, 서울시의 부실한 대응 또한 무시할 수 없는 원인이라고 생각한다. 또한 경기 고양시는 2023년 1월 6일 기사에 따르면 하수도 막힘이나 역류, 맨홀 파손, 누수, 침하 등 사고가 지난 1년간 총 1천400여 건, 하루의 4번꼴로 신고가 접수되었다. 이들 사고 가운데 하수관 로에 기름때가 끼거나 음식물 쓰레기와 일회용 물티슈 등 이물질이 쌓여 생긴 막힘이 가장 많았다. 막힌 하수도를 신속하게 준설하지 않아 오·폐수가 가정집으로 흘러들어온 경우도 종종 있었다.</p>
+</section>
+<section id="연구의-필요성" class="level3">
+<h3 class="anchored" data-anchor-id="연구의-필요성">- 연구의 필요성</h3>
+<p>위의 사례들뿐만 아니라 전 세계적으로도 비슷한 사고가 증가하는 추세이다. 지금까지 지속적으로 비슷한 사고가 발생해왔기에 하수구 관련 문제를 효율적으로 해결할 수 있는 시스템과 구체적인 방안 이 필요하다.</p>
+<p>2024년 기준 환경부 정책보고서의 내용에 따르면 이번 우리나라의 예산 중 하수관리정비(도시침수대 응)는 2023년 1,541억에서 2024년 3,275억원으로 예산이 증가하게 되었다. 또한 강남역, 광화문, 도 림천 저수시설 관리의 예산은 2023년 85억에서 2024년 262억원으로 증가하였다. 하지만 예산이 증 가하여도 비효율적인 점검과 관리를 하게 된다면 환경적 측면의 문제도 발생할뿐더러 시간적, 금전적 비용의 낭비가 극대화될 것이다. 또한 국민들은 자신의 안정성 보장받지 못하게 되고 이로 인한 반발 도 심해지게 될 것이다. 이와 같은 문제를 해결하기 위해 이번 연구에서 하수관로 수위 센서를 활용한 AI모델을 만들고 위/ 경도와 고/저도를 통한 군집 분석으로 구역을 나누어 예측 분석을 시행할 예정이다. 중장기적 관점으 로 보았을 때 효율적인 점검을 제안하고, 실시간 및 단기적 관점으로 살펴보았을 땐 위험구역 판별의 도움을 주는 시스템을 도입하여 두 가지 관점에서의 활용방안이 도입된다면 기존의 시스템보다 더 신 속하고 유용한 정보를 알려주게 될 것이다.</p>
+</section>
+<section id="연구-관련-시스템-현황" class="level3">
+<h3 class="anchored" data-anchor-id="연구-관련-시스템-현황">- 연구 관련 시스템 현황</h3>
+<p>2015년부터 서울시는 전국 최초로 하수관로 수위를 센서로 측정하여 모니터링하는 시스템을 12개 자치구 43개소에 구축한 데 이어 전 자치구에 48개소를 추가로 구축하였고 총 91개 하수관로 수위정 보를 실시간으로 모니터링하고 있다고 밝혔다. 현재 하수관로 모니터링 시스템은 서울시에서 관리하 고 있는 하수관거 총연장 1만487km 중 저지대 등 침수취약지역으로 하수 수위관리가 필요하다고 판 단한 지역을 위주로 설치됐다. 하수관로 맨홀에 수위계를 설치해 수위를 1분 간격으로 자동 측정해 서울시 통합안전상황실과 25개 자치구 재난안전대책본부로 전송되는 시스템이다. 기존엔 지하시설물 인 하수관로 특성상 육안확인이 어려워 집중호우 시 수위가 급격히 상승해 발생하는 문제점을 발견하 지 못했다면, 이제는 하수관로의 현재 수위가 얼마나 되는지 실시간으로 확인할 수 있게 되었다. 하 수도 수위가 관로높이의 60%이상 찰 때부터 해당지역 담당 공무원들에게 자동으로 문자가 발송되도 록 시스템을 구축하고, 하수관로 수위 변동 시 현장에 출동해 사전에 수해예방 조치를 취할 수 있도 록 했다. 수위비율이 80~90%를 넘어간다면 침수위험상황이라고 판단하여 자치구 재난안전대책본부에 서 해당지역 주민들에게 문자, 안내방송 등으로 즉시 상황을 전파해 신속히 대응하게 되는 시스템을 만들었다.</p>
+</section>
+</section>
+<section id="연구의-방향성" class="level2">
+<h2 class="anchored" data-anchor-id="연구의-방향성">2. 연구의 방향성</h2>
+<ul>
+<li>단기적/실시간적 관점 하루 15분 단위로 하수관로 수위를 예측하고, 군집 분석을 통해 수위가 급격히 상승하여 침수 가능 성이 높은 구역을 식별한다. 이를 통해 실시간으로 위험 구역을 파악하고, 관련 기관과 시민들에게 신속하게 경보를 제공한다. 수위가 급격히 상승하여 침수 위험이 높아진다고 예측되는 경우 관련 당국 및 관계자, 혹은 경찰이 나 소방관들에게 자동으로 경보를 발령하고, 즉각적인 대응 조치를 취할 수 있도록 한다. 이를 통해 시민들의 생명과 재산을 보호하고, 침수 피해를 최소화할 수 있게 된다.</li>
+<li>중장기적 관점 중장기적 관점에서 딥러닝 모델을 활용하여 과거의 기후 데이터와 하수관로 수위 데이터를 학습을 시킨다. 이를 통해 하수관로 수위의 시간적 변화를 예측하고, 향후 기간 동안의 수위를 추정함으로써 예측 모델을 통해 특정 분기 또는 기간 동안 침수 가능성이 높은 날짜와 시간대를 사전에 파악할 수 있게 된다. 중장기적 예측은 관련 기관 및 당국이 사전에 대응책을 마련하는데 도움을 줄 것이다. 또 한 하수구 및 관련 시설물의 점검 및 유지보수 작업을 미리 계획할 수 있게 됨으로써 사고 발생 가 능성을 사전에 예방할 수 있다.</li>
+<li>대시보드 제작 대시보드를 통해 하수관로 수위의 실시간 변화를 모니터링하고, 시각화된 데이터를 통해 관리자가 수위 상황을 쉽게 이해하고 대응할 수 있도록 한다. 이로써 관리자들은 신속하고 효과적인 의사 결정 을 내릴 수 있게 된다. 또한 대시보드를 통해 수위 예측 결과 및 위험 구역 정보를 관련 당국, 관리 자, 시민들에게 공유함으로써 투명하고 신속한 대응을 도모할 수 있게 될 것이다.</li>
+<li>데이터 기반 의사 결정 연구는 데이터를 기반으로 한 의사 결정을 지원하는 것을 목표로 한다. 수집된 데이터와 예측 모델 을 활용하여 하수관로 관리에 대한 효과적인 의사 결정을 내리는 것이 중요하다. 데이터 기반의 접근 은 관리자들이 효과적인 대응 및 관리를 할 수 있도록 도와줄 것이며, 이를 통해 하수관로 관리의 효 율성을 높이고 문제 해결에 보다 신속하게 대응할 수 있다.</li>
+<li>협력과 정보 공유 연구는 관련 기관 및 당국과의 협력을 강화하고 연구 결과를 공유하는 것을 목표로 한다. 협력과 정 보 공유를 통해 연구 결과를 보다 효과적으로 활용할 수 있으며, 이를 통해 지역 사회의 안전과 안정 성을 증진시킬 수 있다. 또한, 협력과 정보 공유를 통해 관련 기관과의 소통을 원활하게 하고, 문제 해결에 보다 효과적으로 대응할 수 있다.</li>
+</ul>
+</section>
+</section>
+<section id="분석-내용" class="level1">
+<h1>Ⅱ. 분석 내용</h1>
+<section id="데이터-설명-및-수집" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-설명-및-수집">1. 데이터 설명 및 수집</h2>
+<p>먼저 하수관로의 센서를 이용한 수위현황 데이터와 그 하수관로들의 위치 데이터를 서울 열린데이터 광장에서 실시간 오픈 API로 불러와 조회를 한다. 그리고 크롤링을 하여 1분 단위로 수집되는 데이터 중에서 강남구에 위치한 데이터만 추출하고 csv파일로 저장하여 프로젝트를 진행하였다. 또한 모든 하수관로마다 센서가 부착된 것이 아니기 때문에 부착된 곳의 위치 데이터를 수집하여 시각화를 하여 위치를 확인했다.</p>
+</section>
+<section id="분석-방법" class="level2">
+<h2 class="anchored" data-anchor-id="분석-방법">2. 분석 방법</h2>
+<section id="k-means-clustering-모델을-활용한-구역-군집화" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-clustering-모델을-활용한-구역-군집화">- k-means clustering 모델을 활용한 구역 군집화</h3>
+<p>K 평균 군집화(K-means clustering)는 비지도 학습의 일종으로, 데이터를 클러스터라고 불리는 그 룹으로 군집화하는 알고리즘이다. 침수 위험이 있는 구역을 구분하기 위해 지형, 하수구의 위치와 깊 이 데이터를 사용하여 군집분석을 시행하였다. 군집화를 통해 결측치와 이상치가 많은 센서 데이터를 구역별로 서로 보완하고, 각각의 하수관로 수위에서 군집화된 구역으로 분석 대상(종속 변수)을 선정 하였다. 다음 그림은 센서가 부착된 하수관로의 위치를 군집화를 통해 점으로 표시한 그림이다.</p>
+<p>K-means clustering에서 K(군집의 수)를 결정하는 것은 중요한 문제이다. 적절한 K를 선택하는 것은 군집화의 품질과 해석력에 큰 영향을 미친다. 적절한 K의 결정을 위해, 1부터 10까지의 K를 적용 해보고 클러스터 내의 오차합(SSE)을 평가하는 Elbow Method를 사용한 결과 K=4에서 가장 최적화 된 군집 분석 결과를 얻을 수 있었다. 군집분석 결과 강남역 일대, 압구정동 한강변, 일원동 일대와 세곡동 대모산 일대로 나뉘게 된다. 일 원동 일대와 세곡동 대모산은 고저도가 높고 하수관로 수위센서 데이터를 살펴보았을 때 위험도가 낮 은 것으로 판단되어 강남역 일대와 압구정동 한강변을 분석 대상으로 결정하였다.</p>
+</section>
+<section id="상관관계-분석" class="level3">
+<h3 class="anchored" data-anchor-id="상관관계-분석">- 상관관계 분석</h3>
+<p>구역을 나눈 뒤 강남역 일대, 압구정동 한강변의 하수관로 수위에 영향이 있을만한 시계열 변수를 수집하였다. 기상청으로부터 풍향, 풍속, 기온, 강수량 등의 날씨와 열린서울데이터광장으로부터 강남 구 및 압구정의 총 생활 인구수, 국가수자원관리종합정보시스템으로부터 한강의 수위 데이터를 수집 하였다.</p>
+<p>하수관로 수위센서 데이터와 수집한 데이터를 병합하고 15분 간격으로 조절한 뒤, 수집한 데이터를 통해 하수관로 수위와 각 변수에 대한 선형 관계를 알아보고자 상관계수 행렬 그래프를 통해서 살펴 보았다. 상관계수를 살펴보았을 때 강수량과의 상관계수가 0.64로 가장 높았고 청담대교 인근 한강수 위, 시정, 총 생활 인구수가 그 뒤를 이어 상관관계가 높은 것을 알 수 있었다. 기후, 수위변수뿐만 아니라 해당 구역의 총 생활 인구수와도 상관관계를 보이는 것을 확인하였다.</p>
+</section>
+<section id="데이터-재구조화" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-재구조화">- 데이터 재구조화</h3>
+<p>각 변수를 표준화시킨 뒤 데이터의 구조를 바꾸어주었다. 일반 회귀분석에서는 첫 번째 독립변수 행렬을 통해 첫 번째 종속변수를 학습하고 예측한다. 반면에 시계열 회귀분석은 과거의 독립변수 행렬을 통해 현재의 종속변수를 학습하고 예측해야 한다. 현재로부터 얼마만큼의 과거 데이터를 사용할건지를 의미하는 Sequence를 과거 5시간 데이터인 20 으로(60분/15분 * 5) 정하였다. 따라서 총 데이터 구조는 학습데이터(14행, 15열, 35097개), 테스트 데이터(14행, 15열, 8832개)로 구조화하였다.</p>
+</section>
+<section id="하수관로의-수위-비율-예측lstm-transformer" class="level3">
+<h3 class="anchored" data-anchor-id="하수관로의-수위-비율-예측lstm-transformer">- 하수관로의 수위 비율 예측(LSTM, Transformer)</h3>
+<p>첫 번째로, 시계열 데이터를 분석할 때 활용되는 대표적인 모델인 LSTM 모델이다. LSTM은 Long Short-Term Memory의 약자로, 순환 신경망(RNN)의 한 종류이다. RNN은 순차적인 데이터, 즉 시 퀀스 데이터를 처리하는 데 사용된다. 그러나 일반적인 RNN은 긴 Sequence를 처리할 때 장기 의존 성 문제로 인해 성능이 저하될 수 있는데 LSTM은 이러한 문제를 해결하기 위해 고안된 모델이라 할 수 있다. 이 모델의 장점으로는 장기 의존성을 효과적으로 처리할 수 있다는 점과 긴 Sequence 데 이터를 처리할 때 RNN에 비해 더 좋은 성능을 보인다는 점, 다양한 응용 분야에서 효과적으로 사용 된다는 것이 장점이라 할 수 있다.</p>
+<p>두 번째로, 트랜스포머 기반 시계열 회귀분석 모델이다. 2017년 구글에서 발표한 알고리즘으로 순환 신경망(RNN)이나 장단기 메모리(LSTM)와는 달리 순차적으로 데이터를 처리하지 않고, 병렬적으로 처리하되 데이터의 순서 정보(Positional encoding)를 모델에 제공하는 방식으로 시계열 데이터에도 효과적으로 적용할 수 있는 알고리즘이다. 트랜스포머 기반 모델을 시계열 분석에 사용할 때의 장점 으로는 벙렬 처리를 통한 속도 증가와 장기 의존성을 효과적으로 모델링할 수 있다는 점이다. 우리는 두 모델을 이용하여서 예측 분석을 시행하였다. 2022년 6월 1일 00시 00분부터 2023년 5월 31일 23시 45분까지 (전체 중 80%)를 학습데이터로 사용하고, 2023년 6월 1일 00시 00분부터 2023 년 8월 31일 23시 45분까지 (전체의 20%)를 평가 데이터로 사용하였다.</p>
+</section>
+</section>
+<section id="서비스-활용-시-사용되는-대시보드-예시" class="level2">
+<h2 class="anchored" data-anchor-id="서비스-활용-시-사용되는-대시보드-예시">3. 서비스 활용 시 사용되는 대시보드 예시</h2>
+<p>지도에 사전에 군집화된 구역별로 나누어진 포인트를 선택하여 해당 구역의 단기,장기 수위 예측을 확인할 수 있는 서비스이다. 좌측 상단 지도 위에 있는 달력으로 원하는 시기의 수위 예측을 확인 할 수 있으며, 구역을 선택하면 우측 상단에 해당 구역의 정보가 나오게 된다. 해당 구역의 위험도와 점 검의 필요성 또한 알려주게 된다. 장기적 측면에서 예측 수위가 위험기준을 넘기게 된다면 예측된 해당의 일주일 전에 ‘점검필요’ 메 시지가 대시보드 화면 상에 출력된다. 단기적 측면에서 15분 단위로 예측된 수위비율을 출력하고 위험 기준을 넘길 시에 관련 당국에 경 보하게 된다.</p>
+</section>
+</section>
+<section id="활용-방안-및-기대효과" class="level1">
+<h1>Ⅲ. 활용 방안 및 기대효과</h1>
+<p>이 아이디어의 핵심이라 할 수 있는 것은 AI모델을 통해서 위험 구역을 선별할 구간을 나눈 뒤 이 구역의 하수관 수위를 평균을 내어 AI모델에 학습을 시킨 뒤에 위험구역을 예측하여서 인근 주민들이 나 경찰, 구청, 소방관들에게 알려주고 인명 사고 및 다양한 사건이 발생하기 전에 먼저 대비하고 점 검하도록 알려주어 피해를 최소화하는 것이다. 만약 센서가 많은 하수관로에 설치되고 보다 정확한 날씨 데이터나 인구 유동 데이터 등이 주어지게 된다면 더 정확한 예측 분석 결과를 도출하게 될 것이다. 또한 현재 각 데이터마다 적지 않은 양의 결측치가 있었기 때문에 정확한 분석을 위해서는 무결한 데이터가 필요하다. 많은 양의 데이터를 수집하여 보다 더 정확한 분석 결과와 시스템이 구축이 된다면 많은 예산이 절 약될 것으로 예상된다. 평소 필요 없던 곳에 점검이나 지출을 통해서 소요되던 예산들이 효율적으로 사용하게 되면서 시간적, 금전적 낭비를 줄일 수 있게 될 것이다.</p>
+<p>예시로 2018년 캘리포니아에서 거주지 개발 연구를 진행하던 그렉 쿼스트는 하수도 시스템에 관심 이 들게 되어 자신이 하던 연구와는 완전히 다른 연구를 진행하였다. 하수도 네트워크에 관련된 데이 터를 직접 찾고 수집하여 저장한 데이터들을 뉴욕에서 열린 2018 스트라타 데이터 컨퍼런스에서 발 표하였고 스마트커버 시스템이라는 회사를 창립하게 되었다. 회사를 통해서 하수도 네트워크를 보완, 유지하기 시작했다. 사물인터넷 기술이 탑재된 센서들을 통해서 데이터를 수집하고 분석을 통해 하수 도 네트워크상의 어떤 부분이 수리와 보완이 필요한지 파악하였다. 장기적으로 관찰했을 때 발견되는 패턴이 있다면 이에 대한 대처법을 만듦으로써 빠르고 효율적인 대응을 할 수 있게 되는 시스템을 만 들었다. 이 결과 10만개가 넘는 맨홀 중에서 540개의 스마트커버 센서를 설치하였는데 이것만으로도 관리하고 보완하는 지출의 약 75%가 줄어들었다. 인력과 자원이 효율적으로 배치되고, 사고 자체가 줄어드니까 예산을 크게 줄일 수 있게 된 것이다. 대한민국도 이러한 시스템이 도입된다면 예산을 더 효율적인 곳에 사용할 수 있다면 경제적 손실을 줄이게 될 것이다. 또한 긴급 구조 및 구호 활동 지원 측면에서 예측 모델을 통해 호우로 인한 긴급 상황에 빠르게 대 응하고, 구조 및 구호 활동을 지원함으로써 인명 피해를 최소화할 수 있게 될 것이다.이러한 시스템이 많은 양의 데이터 수집과 함께 높은 성능을 보일시에는 다른 분야의 서비스도 함께 도입하여 다양한 방면의 편리한 서비스도 구성할 수 있게 될 것이다. 예를 들어 충남 당진시에서 맨홀 뚜껑이 파손되면서 아래로 추락한 사고가 발생했었다. 발생 이유는 불법주정차된 차량 때문이라 밝혀졌다. 그 무게가 맨홀 뚜껑에 누적되면서 점차 균열이 생기고 결국 인명 피해로 번지게 된 것이다. 이런 사고를 방지하기 위해 군집화를 통한 구역을 설정한 뒤 민원이 발생되는 지점을 대략적으로 예측하여 효율적인 단속을 하는 동선을 만들 수 있게 된다.</p>
+<p>또한 이런 하수구 역류나 맨홀 파손 같은 문제가 발생하면서 영상 인식을 통해서 맨홀의 문 제가 있는지 확인할 수 있는 시스템을 구축하는 것도 하나의 방안이 될 것이다. 실시간으로 확인 할 수 있는 CCTV를 활용하여 영상 인식을 할 수 있는 데이터 기반 영상 인식 모델 YOLO를 이 용하여 구축한다면 한 서비스에 다양한 기능을 추가함으로써 다양성과 편리함을 보장하게 될 것이 다. 위와 같은 다양한 활용방안들로 일상 속의 위험을 구역별로 쉽게 알 수 있게 되고 다양한 기술들이 합쳐지게 된다면 시민들의 안정성 측면에서, 혹은 국가 예산이나 비용 측면에서도 좋은 결과를 얻게 될 것이다.</p>
+</section>
+<section id="활용데이터-및-참고-문헌-출처" class="level1">
+<h1>Ⅳ. 활용데이터 및 참고 문헌 출처</h1>
+<p><br>1. 서울시 하수관로 수위 현황 - 서울 열린데이터광장<br> <a href="https://news.seoul.go.kr/env/archives/519293">2. 서울특별시 하수수위현황 - 서울특별시 홈페이지</a> <br>3. 서울특별시_경사도 - 공공데이터 포털 <br>4. 서울시 기상 데이터 - 기상청 날씨누리 <br>5. 총생활 인구수 데이터 - 서울 열린데이터광장 <br>6. 청담대교 수위 데이터 - 국가수자원관리종합정보시스템<br> 7. 강수량 데이터 - 국가수자원관리종합정보시스템 <br>8. 2024년 환경부 정책보고서<br> <a href="boannews.com">9. 하수도 넘치는 날에 맨홀에 앉아 센서 옆에 차고</a><br> <a href="seoul.go.kr">10. 서울시, 하수관로 수위 1분단위 실시간 측정 &lt; 안전 &lt; 서울특별시</a><br> <a href="idjnews.kr">11. 양심불량 인도 불법주차에..맨홀 뚜껑 깨지고, 추락 사고까지 &lt; 사회 &lt; 뉴스&lt; 기사본문 - 당진신문</a><br> <a href="korea.kr">12. &amp;도시침수 및 하천홍수 방지대책&amp; 발표 - 정책뉴스 | 뉴스 | 대한민국 정책브리핑</a><br> <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwjf5ur69ciFAxX2nK8BHQjeB9wQFnoECAYQAQ&amp;url=https%3A%2F%2Fme.go.kr%2Fhome%2Ffile%2FreadDownloadFile.do%3FfileId%3D118401%26fileSeq%3D1&amp;usg=AOvVaw2UaVkfasifsmPbUgAk8bEo&amp;opi=89978449">13. 하수관거 최적관리를 위한 모니터링 구축방안 연구 - PDF</a><br> 14. 대구시, 환경공단 빅데이터 기반 지능형 하수 관제서비스 구축 과제 완료 | 국내동향 | 정책동향 | 정책과 연구 :: 건축도시정책정보센터(AURUM)</p>
+<b><b><b>
+<b><b><b>
+</b></b></b></b></b></b></section><b><b><b>
+
+</b></b></b></main><b><b><b> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</b></b></b></div><b><b><b> <!-- /content -->
+
+
+
+</b></b></b></body></html>
