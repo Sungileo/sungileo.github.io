@@ -17,9 +17,10 @@
         <style>
             .color-change {
                 animation: color-change 10s infinite alternate; /* 5초 간격으로 색상을 변환 */
+                font-size: 40px;
             }
             @keyframes color-change {
-                0% { color: #A50034; } /* 초기 색상 */
+                0% { color: #700124; } /* 초기 색상 */
                 25% { color: #3455DB; } /* 중간 색상 */
                 50% { color: #00FF00; } /* 다른 중간 색상 */
                 75% { color: #FFA500; } /* 중간 색상 */
@@ -33,29 +34,67 @@
                 color: blue;
             }
 
+            div > p > b{
+                color: red;
+            }
+
+            div > div > b:nth-child(3){
+                color: orange;
+            }
+
 
         </style>
         <span class="color-change">CSS (Cascading Style Sheet)</span>
 
         <br>
-        <p>선택자</p>
+        <h2>선택자</h2>
         <ul>
             <li>태그선택자</li>
             <p>태그의 이름을 명시하는 방법</p>
-            <li id="text1">아이디 선택자</li>
+            <li id="text1">#아이디 선택자</li>
                 <b>한페이지에 한번만 사용 가능</b>
-            <li class="text2">클래스 선택자</li>
+            <li class="text2">.클래스 선택자</li>
                 <b>여러번 사용(디자인 담당)</b>   
             <li></li>     
         </ul>
 
 
+        <H2>계층선택자</H2>
+        <p>부모태그 > 자식태그</p>
+        <b>그냥b태그</b>
+
+        <p>부모태그
+            <b>자식 b태그</b>
+            <strong>strong태그</strong>
+        </p>
 
 
-
+        <h2>가상 클래스 선택자 -> nth-child(n)</h2>
+        <div>
+            <b>첫째 b태그</b>
+            <b>둘때 b태그</b>
+            <b>셋째 b태그</b>
+        </div>
 
 
     </div>  
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
