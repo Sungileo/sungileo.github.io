@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div>
+        <img src="lgdx_logo.png" alt="">
+
+        <br>
+        <p>Q) <b>요소</b>가 뭔가요?</p>
+        <p>A) 태그와 컨텐츠를 합친거요~</p>
+        
+        <style>
+            .color-change {
+                animation: color-change 10s infinite alternate; /* 5초 간격으로 색상을 변환 */
+            }
+            @keyframes color-change {
+                0% { color: #A50034; } /* 초기 색상 */
+                25% { color: #3455DB; } /* 중간 색상 */
+                50% { color: #00FF00; } /* 다른 중간 색상 */
+                75% { color: #FFA500; } /* 중간 색상 */
+                100% { color: #A50034; } /* 다시 초기 색상 */
+            }
+
+            li#text1{
+                color :red;
+            }
+            li.text2{
+                color: blue;
+            }
+
+
+        </style>
+        <span class="color-change">CSS (Cascading Style Sheet)</span>
+
+        <br>
+        <p>선택자</p>
+        <ul>
+            <li>태그선택자</li>
+            <p>태그의 이름을 명시하는 방법</p>
+            <li id="text1">아이디 선택자</li>
+                <b>한페이지에 한번만 사용 가능</b>
+            <li class="text2">클래스 선택자</li>
+                <b>여러번 사용(디자인 담당)</b>   
+            <li></li>     
+        </ul>
+
+
+
+
+
+
+
+    </div>  
+
+</body>
+</html>
